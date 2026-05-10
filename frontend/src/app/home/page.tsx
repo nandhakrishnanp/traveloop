@@ -4,7 +4,7 @@ import Logo from "@/components/Logo";
 import bannerimg from "../../../public/banner2.jpg";
 import bannerimg1 from "../../../public/banner.png";
 import Image from "next/image";
-import { MapPin, Calendar, Heart, ArrowRight, Plus, User2 } from "lucide-react";
+import { MapPin, Calendar, Heart, ArrowRight, Plus, User2, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -49,6 +49,27 @@ const Page = ({}: PageProps) => {
       {/* Header */}
       <div className="flex items-center justify-between w-full mb-5">
         <Logo />
+        <div className="flex items-center gap-3">
+          {/* Navigation Buttons */}
+          <button
+            onClick={() => {
+              router.push("/calender");
+            }}
+            className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 font-medium"
+          >
+            <Calendar className="w-4 h-4" />
+            <span>Calendar</span>
+          </button>
+          <button
+            onClick={() => {
+              router.push("/community");
+            }}
+            className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 font-medium"
+          >
+            <Users className="w-4 h-4" />
+            <span>Community</span>
+          </button>
+        </div>
         <div className=" flex items-center gap-3">
           <Button
             onClick={() => {

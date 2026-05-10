@@ -48,7 +48,7 @@ const Page = ({}: PageProps) => {
         <div className="mb-6 flex items-center gap-3">
           <Globe className="w-12 h-12 text-accent" />
           <h1 className="text-5xl font-bold text-accent font-space-grotesk">
-            GlobeTrotter
+            Traveloop
           </h1>
         </div>
         <h2 className="text-4xl md:text-5xl font-bold font-space-grotesk mb-6 max-w-4xl">

@@ -1,8 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ChevronLeft, ChevronRight, Search, SlidersHorizontal, Plus, X, MapPin, Calendar as CalendarIcon, Users, DollarSign, Loader } from "lucide-react";
-import { tripsApi } from "@/lib/api";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Search,
+  SlidersHorizontal,
+  Plus,
+  X,
+  MapPin,
+  Calendar as CalendarIcon,
+  Users,
+  DollarSign,
+  Loader,
+} from "lucide-react";
+import axiosInstance from "@/app/axiosconfig";
 import Link from "next/link";
 
 interface Trip {
@@ -21,6 +33,30 @@ const Page = () => {
   const [selectedTrip, setSelectedTrip] = useState<Trip | null>(null);
   const [trips, setTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(true);
+  const [tripColors, setTripColors] = useState<{ [key: string]: string }>({});
+
+  // Color palette for trips
+  const colors = [
+    "bg-blue-500",
+    "bg-purple-500",
+    "bg-pink-500",
+    "bg-red-500",
+    "bg-orange-500",
+    "bg-yellow-500",
+    "bg-green-500",
+    "bg-teal-500",
+    "bg-indigo-500",
+    "bg-cyan-500",
+  ];
+
+  const getRandomColor = (tripId: string) => {
+    if (tripColors[tripId]) {
+      return tripColors[tripId];
+    }
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    setTripColors((prev) => ({ ...prev, [tripId]: randomColor }));
+    return randomColor;
+  };
 
   useEffect(() => {
     loadTrips();
@@ -29,8 +65,29 @@ const Page = () => {
   const loadTrips = async () => {
     try {
       setLoading(true);
-      const response = await tripsApi.getTrips({ limit: 50 });
-      setTrips(response.data.data || []);
+      const response = await axiosInstance.get("/trips", {
+        params: { limit: 50 },
+      });
+      const data = response.data.data || [];
+      setTrips(data);
+      // Pre-assign colors for all trips
+      const colors: { [key: string]: string } = {};
+      const colorPalette = [
+        "bg-blue-500",
+        "bg-purple-500",
+        "bg-pink-500",
+        "bg-red-500",
+        "bg-orange-500",
+        "bg-yellow-500",
+        "bg-green-500",
+        "bg-teal-500",
+        "bg-indigo-500",
+        "bg-cyan-500",
+      ];
+      data.forEach((trip: Trip, index: number) => {
+        colors[trip.id] = colorPalette[index % colorPalette.length];
+      });
+      setTripColors(colors);
     } catch (error) {
       console.error("Error fetching trips:", error);
     } finally {
@@ -49,23 +106,23 @@ const Page = () => {
     const startingDayOfWeek = firstDay.getDay();
 
     const days = [];
-    
+
     for (let i = 0; i < startingDayOfWeek; i++) {
       days.push(null);
     }
-    
+
     for (let day = 1; day <= daysInMonth; day++) {
       days.push(new Date(year, month, day));
     }
-    
+
     return days;
   };
 
   const getTripForDate = (date: Date | null) => {
     if (!date || trips.length === 0) return [];
-    
-    const dateStr = date.toISOString().split('T')[0];
-    return trips.filter(trip => {
+
+    const dateStr = date.toISOString().split("T")[0];
+    return trips.filter((trip) => {
       const start = new Date(trip.start_date);
       const end = new Date(trip.end_date);
       const current = new Date(dateStr);
@@ -74,31 +131,41 @@ const Page = () => {
   };
 
   const previousMonth = () => {
-    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));
+    setCurrentMonth(
+      new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1),
+    );
   };
 
   const nextMonth = () => {
-    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1));
+    setCurrentMonth(
+      new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1),
+    );
   };
 
   const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString('en-US', { 
-      month: 'short', 
-      day: 'numeric', 
-      year: 'numeric' 
+    return new Date(dateStr).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
     });
   };
 
   const getDuration = (startDate: string, endDate: string) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
-    const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+    const days =
+      Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
     return days;
   };
 
-  const monthYear = currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  const monthYear = currentMonth.toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+  });
   const days = getDaysInMonth(currentMonth);
-  const filteredTrips = trips.filter(trip => trip.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filteredTrips = trips.filter((trip) =>
+    trip.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   return (
     <div className="min-h-screen bg-white font-inter">
@@ -106,7 +173,9 @@ const Page = () => {
         {/* Header */}
         <div className="border-b border-gray-200 pb-6 mb-6">
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold text-gray-900 font-space-grotesk">Calendar</h1>
+            <h1 className="text-3xl font-bold text-gray-900 font-space-grotesk">
+              Calendar
+            </h1>
             <Link href="/trips/createtrip">
               <button className="flex items-center gap-2 px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors font-semibold text-sm">
                 <Plus className="w-4 h-4" />
@@ -115,7 +184,7 @@ const Page = () => {
             </Link>
           </div>
         </div>
-          {/* Search */}
+        {/* Search */}
         <div className="mb-6 relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
@@ -142,7 +211,9 @@ const Page = () => {
               >
                 <ChevronLeft className="w-5 h-5 text-gray-600" />
               </button>
-              <h2 className="text-base font-semibold text-gray-900">{monthYear}</h2>
+              <h2 className="text-base font-semibold text-gray-900">
+                {monthYear}
+              </h2>
               <button
                 onClick={nextMonth}
                 className="p-1.5 hover:bg-gray-100 rounded transition"
@@ -169,39 +240,48 @@ const Page = () => {
               <div className="grid grid-cols-7 gap-1">
                 {days.map((day, index) => {
                   const tripsForDay = getTripForDate(day);
-                  const isToday = day && day.toDateString() === new Date().toDateString();
-                  
+                  const isToday =
+                    day && day.toDateString() === new Date().toDateString();
+
                   return (
                     <div
                       key={index}
-                      className={`min-h-[85px] border rounded-md p-1.5 ${
-                        day ? 'bg-white hover:bg-gray-50 border-gray-200' : 'bg-gray-50 border-transparent'
-                      } ${isToday ? 'ring-2 ring-accent ring-inset' : ''} transition cursor-pointer`}
+                      className={`min-h-21 border rounded-md p-1.5 ${
+                        day
+                          ? "bg-white hover:bg-gray-50 border-gray-200"
+                          : "bg-gray-50 border-transparent"
+                      } ${isToday ? "ring-2 ring-accent ring-inset" : ""} transition cursor-pointer`}
                     >
                       {day && (
                         <>
-                          <div className={`text-xs font-medium mb-1 ${
-                            isToday ? 'text-accent' : 'text-gray-700'
-                          }`}>
+                          <div
+                            className={`text-xs font-medium mb-1 ${
+                              isToday ? "text-accent" : "text-gray-700"
+                            }`}
+                          >
                             {day.getDate()}
                           </div>
                           <div className="space-y-0.5">
                             {tripsForDay.slice(0, 2).map((trip) => {
-                              const isStart = day.toISOString().split('T')[0] === trip.start_date;
-                              
+                              const isStart =
+                                day.toISOString().split("T")[0] ===
+                                trip.start_date;
+                              const tripColor =
+                                tripColors[trip.id] || "bg-accent";
+
                               return (
                                 <div
                                   key={trip.id}
                                   onClick={() => setSelectedTrip(trip)}
-                                  className="text-[10px] px-1.5 py-0.5 rounded bg-accent text-white truncate font-medium hover:bg-accent/90 transition cursor-pointer"
+                                  className={`text-[10px] px-1.5 py-0.5 rounded ${tripColor} text-white truncate font-medium hover:opacity-80 transition cursor-pointer`}
                                   title={trip.name}
                                 >
-                                  {isStart ? trip.name : ''}
+                                  {isStart ? trip.name : ""}
                                 </div>
                               );
                             })}
                             {tripsForDay.length > 2 && (
-                              <div 
+                              <div
                                 onClick={() => setSelectedTrip(tripsForDay[2])}
                                 className="text-[10px] text-gray-500 px-1 hover:text-gray-700 cursor-pointer"
                               >
@@ -241,12 +321,18 @@ const Page = () => {
 
       {/* Trip Details Modal */}
       {selectedTrip && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setSelectedTrip(null)}>
-          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+          onClick={() => setSelectedTrip(null)}
+        >
+          <div
+            className="bg-white rounded-xl shadow-2xl max-w-md w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Modal Header */}
             <div className="bg-accent text-white px-6 py-4 rounded-t-xl flex items-center justify-between">
               <h3 className="text-xl font-bold">{selectedTrip.name}</h3>
-              <button 
+              <button
                 onClick={() => setSelectedTrip(null)}
                 className="hover:bg-white/20 rounded-full p-1 transition"
               >
@@ -262,12 +348,19 @@ const Page = () => {
                   <CalendarIcon className="w-5 h-5 text-gray-400" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-900">Duration</p>
+                  <p className="text-sm font-semibold text-gray-900">
+                    Duration
+                  </p>
                   <p className="text-sm text-gray-600">
-                    {formatDate(selectedTrip.start_date)} - {formatDate(selectedTrip.end_date)}
+                    {formatDate(selectedTrip.start_date)} -{" "}
+                    {formatDate(selectedTrip.end_date)}
                   </p>
                   <p className="text-xs text-gray-500 mt-0.5">
-                    {getDuration(selectedTrip.start_date, selectedTrip.end_date)} days
+                    {getDuration(
+                      selectedTrip.start_date,
+                      selectedTrip.end_date,
+                    )}{" "}
+                    days
                   </p>
                 </div>
               </div>
@@ -275,8 +368,12 @@ const Page = () => {
               {/* Description */}
               {selectedTrip.description && (
                 <div className="pt-2 border-t border-gray-200">
-                  <p className="text-sm font-semibold text-gray-900 mb-2">Description</p>
-                  <p className="text-sm text-gray-600 leading-relaxed">{selectedTrip.description}</p>
+                  <p className="text-sm font-semibold text-gray-900 mb-2">
+                    Description
+                  </p>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    {selectedTrip.description}
+                  </p>
                 </div>
               )}
 
@@ -287,15 +384,22 @@ const Page = () => {
                     <DollarSign className="w-5 h-5 text-gray-400" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-gray-900">Budget</p>
-                    <p className="text-sm text-gray-600">${selectedTrip.total_budget.toLocaleString()}</p>
+                    <p className="text-sm font-semibold text-gray-900">
+                      Budget
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      ${selectedTrip.total_budget.toLocaleString()}
+                    </p>
                   </div>
                 </div>
               )}
 
               {/* Actions */}
               <div className="flex gap-3 pt-4">
-                <Link href={`/itenary/build/${selectedTrip.id}`} className="flex-1">
+                <Link
+                  href={`/itinerary/build/${selectedTrip.id}`}
+                  className="flex-1"
+                >
                   <button className="w-full px-4 py-2 bg-accent text-white text-sm font-medium rounded-lg hover:bg-accent/90 transition">
                     View Itinerary
                   </button>
