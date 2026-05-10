@@ -1,0 +1,66 @@
+.env
+
+# Binaries and build output
+/bin/
+/build/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+server
+
+# Go build and test artifacts
+*.o
+*.a
+*.out
+*.test
+coverage.out
+
+# Dependency directories
+vendor/
+Godeps/
+
+# Go workspace
+go.work
+
+# SQLC / generated files (optional)
+# You may want to keep generated code; uncomment to ignore
+#/internal/database/db/queries.sql.go
+
+# Environment files
+.env.local
+.env.*
+
+# Logs
+*.log
+logs/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Node / frontend artifacts (if present in repo)
+node_modules/
+.next/
+dist/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.iml
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Editor swap/temp files
+*~
+*.swp
+*.swo
+
+# Docker
+docker-compose.override.yml
