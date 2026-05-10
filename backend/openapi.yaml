@@ -1,9 +1,9 @@
 openapi: 3.0.3
 info:
-  title: GlobeTrotter API
+  title: Traveloop API
   description: |
     Travel planning platform API for creating multi-city itineraries, managing activities, and tracking budgets.
-    
+
     Built with Go Gin framework and PostgreSQL with sqlc.
   version: 1.0.0
   contact:
@@ -55,15 +55,15 @@ paths:
                 full_name:
                   type: string
       responses:
-        '201':
+        "201":
           description: User registered successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '409':
+                $ref: "#/components/schemas/AuthResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "409":
           description: Email already exists
 
   /auth/login:
@@ -85,27 +85,27 @@ paths:
                 password:
                   type: string
       responses:
-        '200':
+        "200":
           description: Login successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthResponse'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
 
   /users/profile:
     get:
       tags: [Auth]
       summary: Get current user profile
       responses:
-        '200':
+        "200":
           description: User profile
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserResponse'
-    
+                $ref: "#/components/schemas/UserResponse"
+
     patch:
       tags: [Auth]
       summary: Update user profile
@@ -122,12 +122,12 @@ paths:
                 language_preference:
                   type: string
       responses:
-        '200':
+        "200":
           description: Profile updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserResponse'
+                $ref: "#/components/schemas/UserResponse"
 
   /trips:
     get:
@@ -145,7 +145,7 @@ paths:
             type: integer
             default: 0
       responses:
-        '200':
+        "200":
           description: List of trips
           content:
             application/json:
@@ -155,10 +155,10 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/TripResponse'
+                      $ref: "#/components/schemas/TripResponse"
                   pagination:
-                    $ref: '#/components/schemas/PaginationMeta'
-    
+                    $ref: "#/components/schemas/PaginationMeta"
+
     post:
       tags: [Trips]
       summary: Create new trip
@@ -167,56 +167,56 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateTripRequest'
+              $ref: "#/components/schemas/CreateTripRequest"
       responses:
-        '201':
+        "201":
           description: Trip created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TripResponse'
+                $ref: "#/components/schemas/TripResponse"
 
   /trips/{tripId}:
     get:
       tags: [Trips]
       summary: Get trip details
       parameters:
-        - $ref: '#/components/parameters/tripId'
+        - $ref: "#/components/parameters/tripId"
       responses:
-        '200':
+        "200":
           description: Trip details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TripResponse'
-        '404':
-          $ref: '#/components/responses/NotFound'
-    
+                $ref: "#/components/schemas/TripResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
     patch:
       tags: [Trips]
       summary: Update trip
       parameters:
-        - $ref: '#/components/parameters/tripId'
+        - $ref: "#/components/parameters/tripId"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateTripRequest'
+              $ref: "#/components/schemas/UpdateTripRequest"
       responses:
-        '200':
+        "200":
           description: Trip updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TripResponse'
-    
+                $ref: "#/components/schemas/TripResponse"
+
     delete:
       tags: [Trips]
       summary: Delete trip
       parameters:
-        - $ref: '#/components/parameters/tripId'
+        - $ref: "#/components/parameters/tripId"
       responses:
-        '204':
+        "204":
           description: Trip deleted
 
   /trips/{tripId}/itinerary:
@@ -225,63 +225,63 @@ paths:
       summary: Get full trip itinerary
       description: Returns complete trip with stops, activities, and day-by-day breakdown
       parameters:
-        - $ref: '#/components/parameters/tripId'
+        - $ref: "#/components/parameters/tripId"
       responses:
-        '200':
+        "200":
           description: Full itinerary
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItineraryResponse'
+                $ref: "#/components/schemas/ItineraryResponse"
 
   /trips/{tripId}/budget:
     get:
       tags: [Expenses]
       summary: Get trip budget summary
       parameters:
-        - $ref: '#/components/parameters/tripId'
+        - $ref: "#/components/parameters/tripId"
       responses:
-        '200':
+        "200":
           description: Budget breakdown
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BudgetSummaryResponse'
+                $ref: "#/components/schemas/BudgetSummaryResponse"
 
   /trips/{tripId}/stops:
     get:
       tags: [Stops]
       summary: Get trip stops
       parameters:
-        - $ref: '#/components/parameters/tripId'
+        - $ref: "#/components/parameters/tripId"
       responses:
-        '200':
+        "200":
           description: List of stops
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TripStopResponse'
-    
+                  $ref: "#/components/schemas/TripStopResponse"
+
     post:
       tags: [Stops]
       summary: Add stop to trip
       parameters:
-        - $ref: '#/components/parameters/tripId'
+        - $ref: "#/components/parameters/tripId"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateTripStopRequest'
+              $ref: "#/components/schemas/CreateTripStopRequest"
       responses:
-        '201':
+        "201":
           description: Stop added
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TripStopResponse'
+                $ref: "#/components/schemas/TripStopResponse"
 
   /stops/{stopId}:
     get:
@@ -295,13 +295,13 @@ paths:
             type: string
             format: uuid
       responses:
-        '200':
+        "200":
           description: Stop details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TripStopResponse'
-    
+                $ref: "#/components/schemas/TripStopResponse"
+
     patch:
       tags: [Stops]
       summary: Update stop
@@ -316,15 +316,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateTripStopRequest'
+              $ref: "#/components/schemas/UpdateTripStopRequest"
       responses:
-        '200':
+        "200":
           description: Stop updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TripStopResponse'
-    
+                $ref: "#/components/schemas/TripStopResponse"
+
     delete:
       tags: [Stops]
       summary: Delete stop
@@ -336,7 +336,7 @@ paths:
             type: string
             format: uuid
       responses:
-        '204':
+        "204":
           description: Stop deleted
 
   /stops/{stopId}/activities:
@@ -351,15 +351,15 @@ paths:
             type: string
             format: uuid
       responses:
-        '200':
+        "200":
           description: List of activities
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TripActivityResponse'
-    
+                  $ref: "#/components/schemas/TripActivityResponse"
+
     post:
       tags: [Activities]
       summary: Add activity to stop
@@ -375,14 +375,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateTripActivityRequest'
+              $ref: "#/components/schemas/CreateTripActivityRequest"
       responses:
-        '201':
+        "201":
           description: Activity added
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TripActivityResponse'
+                $ref: "#/components/schemas/TripActivityResponse"
 
   /trip-activities/{activityId}:
     patch:
@@ -399,15 +399,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateTripActivityRequest'
+              $ref: "#/components/schemas/UpdateTripActivityRequest"
       responses:
-        '200':
+        "200":
           description: Activity updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TripActivityResponse'
-    
+                $ref: "#/components/schemas/TripActivityResponse"
+
     delete:
       tags: [Activities]
       summary: Remove activity from trip
@@ -419,7 +419,7 @@ paths:
             type: string
             format: uuid
       responses:
-        '204':
+        "204":
           description: Activity removed
 
   /cities/search:
@@ -443,7 +443,7 @@ paths:
             type: integer
             default: 0
       responses:
-        '200':
+        "200":
           description: Search results
           content:
             application/json:
@@ -453,9 +453,9 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/CityResponse'
+                      $ref: "#/components/schemas/CityResponse"
                   pagination:
-                    $ref: '#/components/schemas/PaginationMeta'
+                    $ref: "#/components/schemas/PaginationMeta"
 
   /cities/{cityId}:
     get:
@@ -469,12 +469,12 @@ paths:
             type: string
             format: uuid
       responses:
-        '200':
+        "200":
           description: City details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CityResponse'
+                $ref: "#/components/schemas/CityResponse"
 
   /cities/{cityId}/activities:
     get:
@@ -492,66 +492,66 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: List of activities
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ActivityResponse'
+                  $ref: "#/components/schemas/ActivityResponse"
 
   /trips/{tripId}/expenses:
     get:
       tags: [Expenses]
       summary: Get trip expenses
       parameters:
-        - $ref: '#/components/parameters/tripId'
+        - $ref: "#/components/parameters/tripId"
         - name: type
           in: query
           schema:
             type: string
             enum: [transport, accommodation, meals, other]
       responses:
-        '200':
+        "200":
           description: List of expenses
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ExpenseResponse'
-    
+                  $ref: "#/components/schemas/ExpenseResponse"
+
     post:
       tags: [Expenses]
       summary: Add expense to trip
       parameters:
-        - $ref: '#/components/parameters/tripId'
+        - $ref: "#/components/parameters/tripId"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateExpenseRequest'
+              $ref: "#/components/schemas/CreateExpenseRequest"
       responses:
-        '201':
+        "201":
           description: Expense added
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExpenseResponse'
+                $ref: "#/components/schemas/ExpenseResponse"
 
   /dashboard:
     get:
       tags: [Dashboard]
       summary: Get user dashboard
       responses:
-        '200':
+        "200":
           description: Dashboard data
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DashboardResponse'
+                $ref: "#/components/schemas/DashboardResponse"
 
   /public/trips/{slug}:
     get:
@@ -565,12 +565,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Public trip details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ItineraryResponse'
+                $ref: "#/components/schemas/ItineraryResponse"
 
 components:
   securitySchemes:
@@ -595,7 +595,7 @@ components:
         token:
           type: string
         user:
-          $ref: '#/components/schemas/UserResponse'
+          $ref: "#/components/schemas/UserResponse"
 
     UserResponse:
       type: object
@@ -971,19 +971,19 @@ components:
         upcoming_trips:
           type: array
           items:
-            $ref: '#/components/schemas/TripResponse'
+            $ref: "#/components/schemas/TripResponse"
         recent_trips:
           type: array
           items:
-            $ref: '#/components/schemas/TripResponse'
+            $ref: "#/components/schemas/TripResponse"
         popular_cities:
           type: array
           items:
-            $ref: '#/components/schemas/CityResponse'
+            $ref: "#/components/schemas/CityResponse"
         saved_destinations:
           type: array
           items:
-            $ref: '#/components/schemas/CityResponse'
+            $ref: "#/components/schemas/CityResponse"
         total_trips_count:
           type: integer
 
@@ -1001,7 +1001,7 @@ components:
         activities:
           type: array
           items:
-            $ref: '#/components/schemas/TripActivityResponse'
+            $ref: "#/components/schemas/TripActivityResponse"
         day_cost:
           type: number
 
@@ -1009,15 +1009,15 @@ components:
       type: object
       properties:
         trip:
-          $ref: '#/components/schemas/TripResponse'
+          $ref: "#/components/schemas/TripResponse"
         stops:
           type: array
           items:
-            $ref: '#/components/schemas/TripStopResponse'
+            $ref: "#/components/schemas/TripStopResponse"
         day_by_day:
           type: array
           items:
-            $ref: '#/components/schemas/ItineraryDayView'
+            $ref: "#/components/schemas/ItineraryDayView"
         total_cost:
           type: number
         total_days:
@@ -1049,18 +1049,18 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    
+            $ref: "#/components/schemas/ErrorResponse"
+
     Unauthorized:
       description: Unauthorized
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    
+            $ref: "#/components/schemas/ErrorResponse"
+
     NotFound:
       description: Resource not found
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorResponse'
+            $ref: "#/components/schemas/ErrorResponse"

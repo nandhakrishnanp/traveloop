@@ -12,32 +12,38 @@ const Page = ({}: PageProps) => {
     {
       icon: <Map className="w-8 h-8" />,
       title: "Explore Destinations",
-      description: "Discover amazing places around the world with detailed guides and recommendations",
+      description:
+        "Discover amazing places around the world with detailed guides and recommendations",
     },
     {
       icon: <Calendar className="w-8 h-8" />,
       title: "Plan Itineraries",
-      description: "Design structured, day-by-day travel plans that bring your dream trips to life",
+      description:
+        "Design structured, day-by-day travel plans that bring your dream trips to life",
     },
     {
       icon: <DollarSign className="w-8 h-8" />,
       title: "Budget Smart",
-      description: "Make cost-effective decisions with transparent pricing and budget tracking tools",
+      description:
+        "Make cost-effective decisions with transparent pricing and budget tracking tools",
     },
     {
       icon: <Users className="w-8 h-8" />,
       title: "Collaborate",
-      description: "Plan trips together with friends and family in real-time collaboration",
+      description:
+        "Plan trips together with friends and family in real-time collaboration",
     },
     {
       icon: <Share2 className="w-8 h-8" />,
       title: "Share Experiences",
-      description: "Connect with a community of travelers and share your unforgettable journeys",
+      description:
+        "Connect with a community of travelers and share your unforgettable journeys",
     },
     {
       icon: <Globe className="w-8 h-8" />,
       title: "Personalized AI",
-      description: "Get intelligent recommendations tailored to your preferences and travel style",
+      description:
+        "Get intelligent recommendations tailored to your preferences and travel style",
     },
   ];
 
@@ -56,8 +62,9 @@ const Page = ({}: PageProps) => {
           <span className="text-accent">Plan & Experience</span> Travel
         </h2>
         <p className="text-xl font-inter text-muted-foreground max-w-2xl mb-8">
-          Dream it. Design it. Experience it. Your personalized, intelligent travel companion 
-          that makes planning as exciting as the journey itself.
+          Dream it. Design it. Experience it. Your personalized, intelligent
+          travel companion that makes planning as exciting as the journey
+          itself.
         </p>
         <div className="flex gap-4">
           <button
@@ -85,7 +92,7 @@ const Page = ({}: PageProps) => {
           Everything You Need for the Perfect Trip
         </h3>
         <p className="text-center text-muted-foreground mb-12 font-inter max-w-2xl mx-auto">
-          An end-to-end travel planning platform that combines flexibility, 
+          An end-to-end travel planning platform that combines flexibility,
           intelligence, and community
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -117,27 +124,36 @@ const Page = ({}: PageProps) => {
               <div className="w-16 h-16 bg-accent text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 font-space-grotesk">
                 1
               </div>
-              <h4 className="text-xl font-bold mb-2 font-space-grotesk">Dream</h4>
+              <h4 className="text-xl font-bold mb-2 font-space-grotesk">
+                Dream
+              </h4>
               <p className="text-muted-foreground font-inter">
-                Explore destinations and get inspired by our global travel guides
+                Explore destinations and get inspired by our global travel
+                guides
               </p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-accent text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 font-space-grotesk">
                 2
               </div>
-              <h4 className="text-xl font-bold mb-2 font-space-grotesk">Design</h4>
+              <h4 className="text-xl font-bold mb-2 font-space-grotesk">
+                Design
+              </h4>
               <p className="text-muted-foreground font-inter">
-                Create detailed itineraries with smart budgeting and scheduling tools
+                Create detailed itineraries with smart budgeting and scheduling
+                tools
               </p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-accent text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 font-space-grotesk">
                 3
               </div>
-              <h4 className="text-xl font-bold mb-2 font-space-grotesk">Share</h4>
+              <h4 className="text-xl font-bold mb-2 font-space-grotesk">
+                Share
+              </h4>
               <p className="text-muted-foreground font-inter">
-                Collaborate with others and share your adventures with the community
+                Collaborate with others and share your adventures with the
+                community
               </p>
             </div>
           </div>
@@ -150,7 +166,8 @@ const Page = ({}: PageProps) => {
           Ready to Start Your Adventure?
         </h3>
         <p className="text-xl text-muted-foreground mb-8 font-inter max-w-2xl mx-auto">
-          Join thousands of travelers who are already planning their dream trips with GlobeTrotter
+          Join thousands of travelers who are already planning their dream trips
+          with Traveloop
         </p>
         <button
           onClick={() => {
@@ -165,7 +182,8 @@ const Page = ({}: PageProps) => {
       {/* Footer */}
       <footer className="px-6 py-8 border-t border-accent/20 text-center">
         <p className="text-muted-foreground font-inter">
-          © 2026 GlobeTrotter. Making travel planning as exciting as the trip itself.
+          © 2026 Traveloop. Making travel planning as exciting as the trip
+          itself.
         </p>
       </footer>
     </div>

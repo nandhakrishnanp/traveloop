@@ -95,7 +95,7 @@ Traveloop is a full-stack web application designed to help travelers plan, organ
 ## 📁 Project Structure
 
 ```
-Global-trotter-oodo/
+Traveloop/
 ├── frontend/                 # Next.js React Application
 │   ├── src/
 │   │   ├── app/             # Next.js App Router

@@ -1,11 +1,11 @@
-# GlobeTrotter API Documentation
+# Traveloop API Documentation
 
 **Version:** 1.0.0  
 **Development URL:** `http://localhost:8080/v1`
 
 ## Overview
 
-GlobeTrotter is a comprehensive travel planning platform API that enables users to create multi-city itineraries, manage activities, track budgets, and share travel plans. Built with Go Gin framework and PostgreSQL with sqlc for type-safe database operations.[1]
+Traveloop is a comprehensive travel planning platform API that enables users to create multi-city itineraries, manage activities, track budgets, and share travel plans. Built with Go Gin framework and PostgreSQL with sqlc for type-safe database operations.[1]
 
 ## Authentication
 
