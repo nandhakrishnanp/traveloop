@@ -72,35 +72,35 @@ Traveloop is a full-stack web application designed to help travelers plan, organ
 
 ### Landing Page
 
-![Landing Page](./screeenshots/landing.png)
+![Landing Page](./screenshots/landing.png)
 
 ### Login
 
-![Login](./screeenshots/login.png)
+![Login](./screenshots/login.png)
 
 ### Registration
 
-![Registration](./screeenshots/register.png)
+![Registration](./screenshots/register.png)
 
 ### Home Dashboard
 
-![Home Dashboard](./screeenshots/home.png)
+![Home Dashboard](./screenshots/home.png)
 
 ### Calendar
 
-![Calendar](./screeenshots/calender.png)
+![Calendar](./screenshots/calendar.png)
 
 ### Community
 
-![Community](./screeenshots/community.png)
+![Community](./screenshots/community.png)
 
 ### Profile
 
-![User Profile](./screeenshots/profile.png)
+![User Profile](./screenshots/profile.png)
 
 ### Create Trip
 
-![Create Trip](./screeenshots/create%20trip.png)
+![Create Trip](./screenshots/create-trip.png)
 
 ---
 
@@ -144,13 +144,15 @@ Global-trotter-oodo/
 │   ├── go.sum               # Go dependencies lock
 │   └── sqlc.yaml            # sqlc configuration
 │
-├── screeenshots/            # Project screenshots
+├── screenshots/            # Project screenshots
 │   ├── landing.png
 │   ├── login.png
 │   ├── register.png
 │   ├── home.png
+│   ├── calendar.png
+│   ├── community.png
 │   ├── profile.png
-│   └── create trip.png
+│   └── create-trip.png
 │
 ├── .gitignore               # Git ignore rules
 └── readme.md                # This file
