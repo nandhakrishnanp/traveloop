@@ -2,11 +2,11 @@
 
 Your ultimate travel companion application for planning and tracking your adventures around the world.
 
-**📚 [API Documentation](./backend/APIDOC.md) - View the complete API documentation**
+**[API Documentation](./backend/APIDOC.md) - View the complete API documentation**
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Features](#features)
@@ -24,19 +24,19 @@ Traveloop is a full-stack web application designed to help travelers plan, organ
 
 ---
 
-## ✨ Features
+## Features
 
-- 🔐 User Authentication (Login & Registration)
-- 🏠 Intuitive Dashboard/Home Page
-- ✈️ Trip Planning & Creation
-- 📍 Itinerary Building
-- 👤 User Profile Management
-- 📊 Trip Organization
-- 🎨 Modern, Responsive UI
+- User Authentication (Login & Registration)
+- Intuitive Dashboard/Home Page
+- Trip Planning & Creation
+- Itinerary Building
+- User Profile Management
+- Trip Organization
+- Modern, Responsive UI
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### **Frontend**
 
@@ -68,7 +68,7 @@ Traveloop is a full-stack web application designed to help travelers plan, organ
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 ### Login
 
@@ -92,7 +92,7 @@ Traveloop is a full-stack web application designed to help travelers plan, organ
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Traveloop/
@@ -145,7 +145,7 @@ Traveloop/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
