@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgtype"
 	"oodo.hackathon/internal/database/db"
 	"oodo.hackathon/internal/middlewares"
 )
@@ -189,5 +190,118 @@ func (h *CitiesHandler) GetCityByID(c *gin.Context) {
 		"description":      city.Description,
 		"image_url":        city.ImageUrl,
 		"created_at":       city.CreatedAt,
+	})
+}
+
+// CreateBulkCities creates multiple cities at once
+// POST /cities/bulk
+func (h *CitiesHandler) CreateBulkCities(c *gin.Context) {
+	ctx := c.Request.Context()
+
+	_, err := middlewares.GetUserID(c)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "User not authenticated"})
+		return
+	}
+
+	var req struct {
+		Cities []struct {
+			Name            string   `json:"name" binding:"required"`
+			Country         string   `json:"country" binding:"required"`
+			Region          *string  `json:"region,omitempty"`
+			CostIndex       float64  `json:"cost_index" binding:"required"`
+			PopularityScore *int32   `json:"popularity_score,omitempty"`
+			Latitude        *float64 `json:"latitude,omitempty"`
+			Longitude       *float64 `json:"longitude,omitempty"`
+			Description     *string  `json:"description,omitempty"`
+			ImageUrl        *string  `json:"image_url,omitempty"`
+		} `json:"cities" binding:"required,min=1"`
+	}{}
+
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	var createdCities []gin.H
+	var failedCities []gin.H
+
+	// Insert each city
+	for i, cityReq := range req.Cities {
+		// Convert float64 to pgtype.Numeric
+		costIndex := pgTypeNumericFromFloat64(cityReq.CostIndex)
+		latitude := pgTypeNumericFromFloat64Ptr(cityReq.Latitude)
+		longitude := pgTypeNumericFromFloat64Ptr(cityReq.Longitude)
+
+		params := db.CreateCityParams{
+			Name:            cityReq.Name,
+			Country:         cityReq.Country,
+			Region:          cityReq.Region,
+			CostIndex:       costIndex,
+			PopularityScore: cityReq.PopularityScore,
+			Latitude:        latitude,
+			Longitude:       longitude,
+			Description:     cityReq.Description,
+			ImageUrl:        cityReq.ImageUrl,
+		}
+
+		city, err := h.queries.CreateCity(ctx, params)
+		if err != nil {
+			failedCities = append(failedCities, gin.H{
+				"index": i,
+				"name":  cityReq.Name,
+				"error": err.Error(),
+			})
+			continue
+		}
+
+		costIndexFloat := parseNumericToFloat64(city.CostIndex)
+		popularityScoreInt := 0
+		if city.PopularityScore != nil {
+			popularityScoreInt = int(*city.PopularityScore)
+		}
+
+		latitudeFloat := (*float64)(nil)
+		if city.Latitude.Valid {
+			f8, err := city.Latitude.Float64Value()
+			if err == nil {
+				latitudeFloat = &f8.Float64
+			}
+		}
+
+		longitudeFloat := (*float64)(nil)
+		if city.Longitude.Valid {
+			f8, err := city.Longitude.Float64Value()
+			if err == nil {
+				longitudeFloat = &f8.Float64
+			}
+		}
+
+		createdCities = append(createdCities, gin.H{
+			"id":               city.ID,
+			"name":             city.Name,
+			"country":          city.Country,
+			"region":           city.Region,
+			"cost_index":       costIndexFloat,
+			"popularity_score": popularityScoreInt,
+			"latitude":         latitudeFloat,
+			"longitude":        longitudeFloat,
+			"description":      city.Description,
+			"image_url":        city.ImageUrl,
+			"created_at":       city.CreatedAt,
+		})
+	}
+
+	status := http.StatusCreated
+	if len(failedCities) > 0 {
+		status = http.StatusMultiStatus
+	}
+
+	c.JSON(status, gin.H{
+		"created_cities": createdCities,
+		"failed_cities":  failedCities,
+		"total":          len(req.Cities),
+		"success_count":  len(createdCities),
+		"failure_count":  len(failedCities),
 	})
 }

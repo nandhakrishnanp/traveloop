@@ -227,6 +227,22 @@ type SearchCitiesRequest struct {
 	Offset int    `form:"offset"`
 }
 
+type CreateCityRequest struct {
+	Name            string   `json:"name" binding:"required"`
+	Country         string   `json:"country" binding:"required"`
+	Region          *string  `json:"region,omitempty"`
+	CostIndex       float64  `json:"cost_index" binding:"required"`
+	PopularityScore *int32   `json:"popularity_score,omitempty"`
+	Latitude        *float64 `json:"latitude,omitempty"`
+	Longitude       *float64 `json:"longitude,omitempty"`
+	Description     *string  `json:"description,omitempty"`
+	ImageURL        *string  `json:"image_url,omitempty"`
+}
+
+type BulkCreateCitiesRequest struct {
+	Cities []CreateCityRequest `json:"cities" binding:"required,min=1"`
+}
+
 // Dashboard Types
 
 type DashboardResponse struct {
