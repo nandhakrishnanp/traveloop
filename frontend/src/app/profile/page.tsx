@@ -1,10 +1,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Camera, Mail, User, Calendar, MapPin, Edit2, Save, X, Globe, LogOut } from "lucide-react";
+import {
+  Camera,
+  Mail,
+  User,
+  Calendar,
+  MapPin,
+  Edit2,
+  Save,
+  X,
+  Globe,
+  LogOut,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/app/axiosconfig";
-import Logo from "@/components/Logo";
 import Image from "next/image";
 
 interface Trip {
@@ -37,7 +47,7 @@ const Page = ({}: PageProps) => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
-  
+
   const [userInfo, setUserInfo] = useState<UserProfile | null>(null);
   const [editedInfo, setEditedInfo] = useState({
     full_name: "",
@@ -97,8 +107,12 @@ const Page = ({}: PageProps) => {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
-      const upcoming = trips.filter((trip: Trip) => new Date(trip.start_date) >= today);
-      const past = trips.filter((trip: Trip) => new Date(trip.end_date) < today);
+      const upcoming = trips.filter(
+        (trip: Trip) => new Date(trip.start_date) >= today,
+      );
+      const past = trips.filter(
+        (trip: Trip) => new Date(trip.end_date) < today,
+      );
 
       setUpcomingTrips(upcoming);
       setPastTrips(past);
@@ -115,7 +129,7 @@ const Page = ({}: PageProps) => {
       setSaving(true);
       setError("");
       const token = localStorage.getItem("token");
-      
+
       const updateData: any = {
         full_name: editedInfo.full_name,
         language_preference: editedInfo.language_preference,
@@ -149,21 +163,23 @@ const Page = ({}: PageProps) => {
   };
 
   const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString("en-US", { 
-      month: "short", 
-      day: "numeric", 
-      year: "numeric" 
+    return new Date(date).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
     });
   };
 
   const calculateDays = (start: string, end: string) => {
     const startDate = new Date(start);
     const endDate = new Date(end);
-    return Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+    return Math.ceil(
+      (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24),
+    );
   };
 
   const TripCard = ({ trip }: { trip: Trip }) => (
-    <div 
+    <div
       onClick={() => router.push(`/trips/user/${trip.id}`)}
       className="bg-white font-inter rounded-xl overflow-hidden border border-gray-200 hover:shadow-lg transition-all duration-300 group cursor-pointer"
     >
@@ -186,11 +202,17 @@ const Page = ({}: PageProps) => {
       <div className="p-4">
         <div className="flex items-center gap-2 text-gray-600 text-sm mb-3">
           <Calendar className="w-4 h-4 text-accent" />
-          <span>{formatDate(trip.start_date)} - {formatDate(trip.end_date)}</span>
+          <span>
+            {formatDate(trip.start_date)} - {formatDate(trip.end_date)}
+          </span>
         </div>
         <div className="flex items-center justify-between text-sm mb-3">
-          <span className="text-gray-600">{calculateDays(trip.start_date, trip.end_date)} days</span>
-          <span className="font-semibold text-gray-900">${trip.total_budget?.toFixed(2) || "0.00"}</span>
+          <span className="text-gray-600">
+            {calculateDays(trip.start_date, trip.end_date)} days
+          </span>
+          <span className="font-semibold text-gray-900">
+            ${trip.total_budget?.toFixed(2) || "0.00"}
+          </span>
         </div>
         <button className="w-full py-2 bg-accent/10 text-accent rounded-lg hover:bg-accent/20 transition font-medium text-sm">
           View Details
@@ -227,23 +249,23 @@ const Page = ({}: PageProps) => {
   }
 
   return (
-    <div className="min-h-screen font-inter bg-gray-50">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-5">
-        <div className="flex items-center justify-between w-full mb-6 bg-white p-4 rounded-lg shadow-sm">
-          <Logo />
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition"
-          >
-            <LogOut className="w-4 h-4" />
-            <span className="hidden sm:inline">Logout</span>
-          </button>
-        </div>
-
+    <div className="flex flex-col min-h-screen font-inter bg-gray-50">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-5 flex-grow w-full">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">User Profile</h1>
-            <p className="text-gray-600 mt-1">Manage your account and view your travel history</p>
+          <div className="mb-8 flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">User Profile</h1>
+              <p className="text-gray-600 mt-1">
+                Manage your account and view your travel history
+              </p>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium"
+            >
+              <LogOut className="w-4 h-4" />
+              Logout
+            </button>
           </div>
 
           {error && (
@@ -281,7 +303,9 @@ const Page = ({}: PageProps) => {
 
               <div className="flex-1">
                 <div className="flex items-start justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-gray-900">User Details</h2>
+                  <h2 className="text-2xl font-bold text-gray-900">
+                    User Details
+                  </h2>
                   {!isEditing ? (
                     <button
                       onClick={() => setIsEditing(true)}
@@ -328,11 +352,18 @@ const Page = ({}: PageProps) => {
                       <input
                         type="text"
                         value={editedInfo.full_name}
-                        onChange={(e) => setEditedInfo({ ...editedInfo, full_name: e.target.value })}
+                        onChange={(e) =>
+                          setEditedInfo({
+                            ...editedInfo,
+                            full_name: e.target.value,
+                          })
+                        }
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                       />
                     ) : (
-                      <p className="text-gray-900 text-base">{userInfo.full_name}</p>
+                      <p className="text-gray-900 text-base">
+                        {userInfo.full_name}
+                      </p>
                     )}
                   </div>
 
@@ -342,7 +373,9 @@ const Page = ({}: PageProps) => {
                       Email Address
                     </label>
                     <p className="text-gray-900 text-base">{userInfo.email}</p>
-                    <p className="text-xs text-gray-500 mt-1">Email cannot be changed</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Email cannot be changed
+                    </p>
                   </div>
 
                   <div>
@@ -353,7 +386,12 @@ const Page = ({}: PageProps) => {
                     {isEditing ? (
                       <select
                         value={editedInfo.language_preference}
-                        onChange={(e) => setEditedInfo({ ...editedInfo, language_preference: e.target.value })}
+                        onChange={(e) =>
+                          setEditedInfo({
+                            ...editedInfo,
+                            language_preference: e.target.value,
+                          })
+                        }
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                       >
                         <option value="en">English</option>
@@ -376,7 +414,9 @@ const Page = ({}: PageProps) => {
                       <Calendar className="w-4 h-4 text-accent" />
                       Member Since
                     </label>
-                    <p className="text-gray-900 text-base">{formatDate(userInfo.created_at)}</p>
+                    <p className="text-gray-900 text-base">
+                      {formatDate(userInfo.created_at)}
+                    </p>
                   </div>
                 </div>
 
@@ -389,7 +429,12 @@ const Page = ({}: PageProps) => {
                     <input
                       type="url"
                       value={editedInfo.profile_photo_url}
-                      onChange={(e) => setEditedInfo({ ...editedInfo, profile_photo_url: e.target.value })}
+                      onChange={(e) =>
+                        setEditedInfo({
+                          ...editedInfo,
+                          profile_photo_url: e.target.value,
+                        })
+                      }
                       placeholder="https://example.com/photo.jpg"
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                     />
@@ -402,7 +447,9 @@ const Page = ({}: PageProps) => {
           <section className="mb-12">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-1 h-8 bg-accent rounded-full"></div>
-              <h2 className="text-2xl font-bold text-gray-900">Upcoming Trips</h2>
+              <h2 className="text-2xl font-bold text-gray-900">
+                Upcoming Trips
+              </h2>
               <span className="px-3 py-1 bg-accent/10 text-accent rounded-full text-sm font-semibold">
                 {upcomingTrips.length}
               </span>

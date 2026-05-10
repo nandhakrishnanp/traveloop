@@ -274,7 +274,7 @@ const Page = ({}: PageProps) => {
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-900">Trip Itinerary</h2>
               <Button 
-                onClick={() => router.push(`/itenary/build/${id}`)}
+                onClick={() => router.push(`/itinerary/build/${id}`)}
                 className="bg-accent hover:bg-accent/90 text-white px-5 py-2 rounded-lg font-semibold flex items-center gap-2"
               >
                 <Plus className="w-4 h-4" />
