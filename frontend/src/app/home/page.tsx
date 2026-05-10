@@ -4,7 +4,15 @@ import Logo from "@/components/Logo";
 import bannerimg from "../../../public/banner2.jpg";
 import bannerimg1 from "../../../public/banner.png";
 import Image from "next/image";
-import { MapPin, Calendar, Heart, ArrowRight, Plus, User2, Users } from "lucide-react";
+import {
+  MapPin,
+  Calendar,
+  Heart,
+  ArrowRight,
+  Plus,
+  User2,
+  Users,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -82,7 +90,7 @@ const Page = ({}: PageProps) => {
           </Button>
           <div
             onClick={() => {
-               router.push("/profile")
+              router.push("/profile");
             }}
             className="w-12 h-12 bg-accent rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity"
           >
