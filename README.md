@@ -1,6 +1,7 @@
 # Traveloop - OODO
 
-Your ultimate travel companion application for planning and tracking your adventures around the world.
+Your all-in-one travel companion app for planning, organizing, and tracking your adventures across the globe.
+
 
 **[API Documentation](./backend/APIDOC.md) - View the complete API documentation**
 
