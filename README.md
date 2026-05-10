@@ -70,37 +70,25 @@ Traveloop is a full-stack web application designed to help travelers plan, organ
 
 ## 📸 Screenshots
 
-### Landing Page
-
-![Landing Page](./screenshots/landing.png)
-
 ### Login
 
 ![Login](./screenshots/login.png)
-
-### Registration
-
-![Registration](./screenshots/register.png)
-
-### Home Dashboard
-
-![Home Dashboard](./screenshots/home.png)
-
-### Calendar
-
-![Calendar](./screenshots/calendar.png)
-
-### Community
-
-![Community](./screenshots/community.png)
 
 ### Profile
 
 ![User Profile](./screenshots/profile.png)
 
+### Calendar
+
+![Calendar](./screenshots/calender.png)
+
+### Community
+
+![Community](./screenshots/cummunity.png)
+
 ### Create Trip
 
-![Create Trip](./screenshots/create-trip.png)
+![Create Trip](./screenshots/createtrip.png)
 
 ---
 
@@ -115,7 +103,7 @@ Global-trotter-oodo/
 │   │   │   ├── calender/    # Calendar/Scheduling
 │   │   │   ├── community/   # Community features
 │   │   │   ├── home/        # Home/Dashboard
-│   │   │   ├── itenary/     # Itinerary pages
+│   │   │   ├── itinerary/   # Itinerary pages
 │   │   │   ├── profile/     # User profile
 │   │   │   ├── trips/       # Trips management
 │   │   │   ├── user/        # User pages
@@ -145,17 +133,14 @@ Global-trotter-oodo/
 │   └── sqlc.yaml            # sqlc configuration
 │
 ├── screenshots/            # Project screenshots
-│   ├── landing.png
 │   ├── login.png
-│   ├── register.png
-│   ├── home.png
-│   ├── calendar.png
-│   ├── community.png
 │   ├── profile.png
-│   └── create-trip.png
+│   ├── calender.png
+│   ├── cummunity.png
+│   └── createtrip.png
 │
 ├── .gitignore               # Git ignore rules
-└── readme.md                # This file
+└── README.md                # This file
 ```
 
 ---
@@ -176,7 +161,7 @@ npm install
 npm run dev
 ```
 
-The frontend be available at `http://localhost:3000`
+The frontend will be available at `http://localhost:3000`
 
 ### Backend Setup
 
